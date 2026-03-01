@@ -1,0 +1,1339 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dream Music — Your Story, Your Sound</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --blue-100: #e0f0ff;
+  --blue-200: #b3d9ff;
+  --blue-400: #4da6ff;
+  --blue-500: #1a8cff;
+  --blue-600: #0070e0;
+  --blue-800: #003d7a;
+  --blue-900: #001f3d;
+  --accent: #00d4ff;
+  --accent2: #ff6b9d;
+  --accent3: #ffd700;
+  --gold: #f0b429;
+}
+
+[data-theme="dark"] {
+  --bg: #020c18;
+  --bg2: #051525;
+  --bg3: #0a1e35;
+  --surface: rgba(10,30,60,0.7);
+  --text: #e8f4ff;
+  --text-muted: #7badd4;
+  --border: rgba(0,212,255,0.15);
+  --card-bg: rgba(5,20,40,0.8);
+  --nav-bg: rgba(2,12,24,0.85);
+}
+
+[data-theme="light"] {
+  --bg: #f0f8ff;
+  --bg2: #e0f0ff;
+  --bg3: #ffffff;
+  --surface: rgba(255,255,255,0.8);
+  --text: #001a33;
+  --text-muted: #3366aa;
+  --border: rgba(0,112,224,0.2);
+  --card-bg: rgba(255,255,255,0.9);
+  --nav-bg: rgba(240,248,255,0.9);
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  overflow-x: hidden;
+  transition: background 0.4s, color 0.4s;
+}
+
+/* ─── ANIMATED BG ─── */
+.bg-orbs {
+  position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden;
+}
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.18;
+  animation: float 12s ease-in-out infinite;
+}
+[data-theme="light"] .orb { opacity: 0.12; }
+.orb-1 { width: 600px; height: 600px; background: var(--blue-500); top: -200px; left: -100px; animation-delay: 0s; }
+.orb-2 { width: 400px; height: 400px; background: var(--accent); top: 40%; right: -100px; animation-delay: 4s; }
+.orb-3 { width: 500px; height: 500px; background: var(--accent2); bottom: -150px; left: 30%; animation-delay: 8s; }
+.orb-4 { width: 300px; height: 300px; background: var(--accent3); top: 20%; left: 50%; animation-delay: 2s; }
+
+@keyframes float {
+  0%,100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-30px) scale(1.05); }
+}
+
+/* ─── NAV ─── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  backdrop-filter: blur(20px);
+  background: var(--nav-bg);
+  border-bottom: 1px solid var(--border);
+  padding: 0 5%;
+  display: flex; align-items: center; justify-content: space-between;
+  height: 72px;
+  transition: background 0.4s;
+}
+.nav-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.6rem; font-weight: 900;
+  background: linear-gradient(135deg, var(--blue-400), var(--accent));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  letter-spacing: -0.02em;
+}
+.nav-logo span { font-style: italic; }
+.nav-links { display: flex; gap: 2rem; list-style: none; }
+.nav-links a {
+  text-decoration: none; color: var(--text-muted);
+  font-size: 0.9rem; font-weight: 500; letter-spacing: 0.02em;
+  transition: color 0.3s;
+  position: relative;
+}
+.nav-links a::after {
+  content: ''; position: absolute; bottom: -4px; left: 0; right: 0; height: 2px;
+  background: var(--accent); transform: scaleX(0); transition: transform 0.3s;
+}
+.nav-links a:hover { color: var(--text); }
+.nav-links a:hover::after { transform: scaleX(1); }
+.nav-right { display: flex; align-items: center; gap: 1rem; }
+.theme-toggle {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 50px; padding: 6px 14px; cursor: pointer;
+  color: var(--text); font-size: 1rem; transition: all 0.3s;
+  display: flex; align-items: center; gap: 6px;
+}
+.theme-toggle:hover { border-color: var(--accent); }
+.btn-nav {
+  background: linear-gradient(135deg, var(--blue-500), var(--accent));
+  color: #fff; border: none; border-radius: 50px;
+  padding: 10px 24px; font-size: 0.9rem; font-weight: 600;
+  cursor: pointer; transition: transform 0.2s, box-shadow 0.2s;
+}
+.btn-nav:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(26,140,255,0.4); }
+
+/* ─── SECTIONS GENERAL ─── */
+section { position: relative; z-index: 1; }
+.container { max-width: 1200px; margin: 0 auto; padding: 0 5%; }
+
+/* ─── HERO ─── */
+#hero {
+  min-height: 100vh;
+  display: flex; align-items: center;
+  padding-top: 100px;
+  padding-bottom: 60px;
+  overflow: hidden;
+}
+.hero-inner {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;
+  width: 100%;
+}
+.hero-tag {
+  display: inline-block;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.75rem; letter-spacing: 0.15em;
+  color: var(--accent); border: 1px solid var(--accent);
+  border-radius: 50px; padding: 6px 16px;
+  margin-bottom: 1.5rem;
+  animation: fadeUp 0.8s ease both;
+}
+.hero-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.8rem, 5vw, 4.5rem);
+  font-weight: 900; line-height: 1.1;
+  margin-bottom: 1.5rem;
+  animation: fadeUp 0.8s 0.15s ease both;
+}
+.hero-title em {
+  font-style: italic;
+  background: linear-gradient(135deg, var(--blue-400), var(--accent), var(--accent2));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.hero-sub {
+  font-size: 1.1rem; line-height: 1.7; color: var(--text-muted);
+  margin-bottom: 2.5rem; max-width: 480px;
+  animation: fadeUp 0.8s 0.3s ease both;
+}
+.hero-ctas {
+  display: flex; gap: 1rem; flex-wrap: wrap;
+  animation: fadeUp 0.8s 0.45s ease both;
+}
+.btn-primary {
+  background: linear-gradient(135deg, var(--blue-500), var(--accent));
+  color: #fff; border: none; border-radius: 50px;
+  padding: 16px 36px; font-size: 1rem; font-weight: 600;
+  cursor: pointer; transition: all 0.3s;
+  box-shadow: 0 4px 20px rgba(26,140,255,0.3);
+}
+.btn-primary:hover { transform: translateY(-3px); box-shadow: 0 12px 35px rgba(0,212,255,0.4); }
+.btn-outline {
+  background: transparent; color: var(--text);
+  border: 1.5px solid var(--border); border-radius: 50px;
+  padding: 16px 36px; font-size: 1rem; font-weight: 500;
+  cursor: pointer; transition: all 0.3s;
+}
+.btn-outline:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-3px); }
+
+/* Vinyl record animation */
+.hero-visual {
+  display: flex; justify-content: center; align-items: center;
+  position: relative;
+  animation: fadeIn 1s 0.5s ease both;
+}
+.vinyl-wrap {
+  position: relative; width: 360px; height: 360px;
+}
+.vinyl {
+  width: 100%; height: 100%;
+  border-radius: 50%;
+  background: conic-gradient(
+    #111 0deg, #222 10deg, #111 20deg, #1a1a2e 30deg,
+    #111 40deg, #222 50deg, #111 60deg, #222 70deg,
+    #111 80deg, #1a1a2e 90deg, #111 100deg, #222 110deg,
+    #111 120deg, #222 130deg, #111 140deg, #1a1a2e 150deg,
+    #111 160deg, #222 170deg, #111 180deg, #222 190deg,
+    #111 200deg, #1a1a2e 210deg, #111 220deg, #222 230deg,
+    #111 240deg, #222 250deg, #111 260deg, #1a1a2e 270deg,
+    #111 280deg, #222 290deg, #111 300deg, #222 310deg,
+    #111 320deg, #1a1a2e 330deg, #111 340deg, #222 350deg, #111 360deg
+  );
+  animation: spin 6s linear infinite;
+  position: relative;
+  box-shadow: 0 0 60px rgba(0,212,255,0.3), 0 0 120px rgba(26,140,255,0.15);
+}
+[data-theme="light"] .vinyl {
+  background: conic-gradient(
+    #222 0deg, #333 10deg, #222 20deg, #2a2a4e 30deg,
+    #222 40deg, #333 50deg, #222 60deg, #333 70deg,
+    #222 80deg, #2a2a4e 90deg, #222 100deg, #333 110deg,
+    #222 120deg, #333 130deg, #222 140deg, #2a2a4e 150deg,
+    #222 160deg, #333 170deg, #222 180deg, #333 190deg,
+    #222 200deg, #2a2a4e 210deg, #222 220deg, #333 230deg,
+    #222 240deg, #333 250deg, #222 260deg, #2a2a4e 270deg,
+    #222 280deg, #333 290deg, #222 300deg, #333 310deg,
+    #222 320deg, #2a2a4e 330deg, #222 340deg, #333 350deg, #222 360deg
+  );
+}
+.vinyl-label {
+  position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 120px; height: 120px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--blue-800), var(--blue-600));
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  box-shadow: 0 0 30px rgba(0,212,255,0.4);
+}
+.vinyl-label-text {
+  font-family: 'Playfair Display', serif;
+  font-size: 0.7rem; font-weight: 700; color: var(--accent);
+  text-align: center; line-height: 1.3;
+}
+.vinyl-dot {
+  width: 12px; height: 12px; border-radius: 50%;
+  background: #fff; margin-top: 4px;
+}
+.floating-note {
+  position: absolute;
+  font-size: 1.8rem;
+  animation: floatNote 4s ease-in-out infinite;
+  pointer-events: none;
+}
+.n1 { top: -20px; right: 30px; animation-delay: 0s; }
+.n2 { bottom: 10px; left: -10px; animation-delay: 1.5s; }
+.n3 { top: 50%; right: -30px; animation-delay: 3s; }
+.n4 { top: 10px; left: 20px; animation-delay: 0.8s; font-size: 1.3rem; }
+
+@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+@keyframes floatNote {
+  0%,100% { transform: translateY(0) rotate(-10deg); opacity: 0.8; }
+  50% { transform: translateY(-20px) rotate(10deg); opacity: 1; }
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; } to { opacity: 1; }
+}
+
+/* ─── MARQUEE STRIP ─── */
+.marquee-strip {
+  background: linear-gradient(135deg, var(--blue-600), var(--accent));
+  padding: 14px 0;
+  overflow: hidden; white-space: nowrap;
+}
+.marquee-track {
+  display: inline-block;
+  animation: marquee 20s linear infinite;
+}
+.marquee-track span {
+  display: inline-block;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.8rem; letter-spacing: 0.1em; font-weight: 700;
+  color: #fff; padding: 0 2rem;
+}
+.marquee-sep { color: rgba(255,255,255,0.5) !important; }
+@keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+/* ─── SECTION HEADERS ─── */
+.section-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.7rem; letter-spacing: 0.2em;
+  color: var(--accent); margin-bottom: 1rem;
+  text-transform: uppercase;
+}
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 900; line-height: 1.15;
+  margin-bottom: 1rem;
+}
+.section-title em {
+  font-style: italic;
+  background: linear-gradient(135deg, var(--blue-400), var(--accent));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.section-desc {
+  color: var(--text-muted); font-size: 1.05rem; line-height: 1.75;
+  max-width: 560px;
+}
+
+/* ─── SERVICES ─── */
+#services {
+  padding: 120px 0;
+}
+.services-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
+  margin-top: 4rem;
+}
+.service-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 2.5rem 2rem;
+  position: relative; overflow: hidden;
+  transition: transform 0.4s, box-shadow 0.4s, border-color 0.4s;
+  cursor: default;
+  backdrop-filter: blur(20px);
+}
+.service-card::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(26,140,255,0.08), transparent);
+  opacity: 0; transition: opacity 0.4s;
+}
+.service-card:hover { transform: translateY(-8px); border-color: var(--blue-400); box-shadow: 0 20px 60px rgba(0,112,224,0.2); }
+.service-card:hover::before { opacity: 1; }
+.service-icon {
+  font-size: 2.5rem; margin-bottom: 1.2rem;
+  display: block;
+  animation: pulse 2s ease-in-out infinite;
+}
+@keyframes pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+.service-card:nth-child(2) .service-icon { animation-delay: 0.3s; }
+.service-card:nth-child(3) .service-icon { animation-delay: 0.6s; }
+.service-card:nth-child(4) .service-icon { animation-delay: 0.9s; }
+.service-card:nth-child(5) .service-icon { animation-delay: 1.2s; }
+.service-card:nth-child(6) .service-icon { animation-delay: 1.5s; }
+.service-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem; font-weight: 700; margin-bottom: 0.8rem;
+}
+.service-desc { color: var(--text-muted); font-size: 0.9rem; line-height: 1.6; }
+.service-card.featured {
+  background: linear-gradient(135deg, rgba(0,112,224,0.2), rgba(0,212,255,0.1));
+  border-color: var(--blue-400);
+  grid-column: span 2;
+}
+.tag-new {
+  position: absolute; top: 1.5rem; right: 1.5rem;
+  background: linear-gradient(135deg, var(--blue-500), var(--accent));
+  color: #fff; font-size: 0.65rem; font-weight: 700;
+  letter-spacing: 0.1em; padding: 4px 12px; border-radius: 50px;
+}
+
+/* ─── HOW IT WORKS ─── */
+#how {
+  padding: 120px 0;
+  background: var(--bg2);
+}
+.steps {
+  display: grid; grid-template-columns: repeat(4,1fr); gap: 2rem; margin-top: 4rem;
+  position: relative;
+}
+.steps::before {
+  content: '';
+  position: absolute; top: 40px; left: 12%; right: 12%; height: 2px;
+  background: linear-gradient(90deg, var(--blue-500), var(--accent));
+  z-index: 0;
+}
+.step {
+  text-align: center; position: relative; z-index: 1;
+}
+.step-num {
+  width: 80px; height: 80px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--blue-600), var(--accent));
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 1.5rem;
+  font-family: 'Space Mono', monospace; font-size: 1.2rem; font-weight: 700; color: #fff;
+  box-shadow: 0 0 30px rgba(0,212,255,0.3);
+  position: relative; z-index: 2;
+}
+.step-title { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; }
+.step-desc { color: var(--text-muted); font-size: 0.88rem; line-height: 1.6; }
+
+/* ─── ABOUT ─── */
+#about {
+  padding: 120px 0;
+}
+.about-inner {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center;
+}
+.about-visual {
+  position: relative; display: flex; align-items: center; justify-content: center;
+}
+.sapna-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 28px; padding: 2.5rem;
+  backdrop-filter: blur(20px);
+  text-align: center;
+  max-width: 340px;
+  position: relative;
+}
+.sapna-avatar {
+  width: 100px; height: 100px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--blue-500), var(--accent2));
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 1.2rem;
+  font-size: 3rem;
+  box-shadow: 0 0 40px rgba(255,107,157,0.3);
+}
+.sapna-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem; font-weight: 900; margin-bottom: 0.3rem;
+}
+.sapna-title { color: var(--accent); font-size: 0.85rem; font-family: 'Space Mono', monospace; margin-bottom: 1rem; }
+.sapna-bio { color: var(--text-muted); font-size: 0.9rem; line-height: 1.6; }
+.floating-stat {
+  position: absolute;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 16px; padding: 1rem 1.5rem;
+  backdrop-filter: blur(20px);
+  animation: floatNote 5s ease-in-out infinite;
+}
+.fs1 { top: -20px; right: -20px; animation-delay: 0s; }
+.fs2 { bottom: -20px; left: -20px; animation-delay: 2.5s; }
+.stat-num {
+  font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 900;
+  background: linear-gradient(135deg, var(--blue-400), var(--accent));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.stat-label { color: var(--text-muted); font-size: 0.75rem; }
+.about-content { }
+.about-content p { color: var(--text-muted); line-height: 1.8; margin-bottom: 1.5rem; }
+.about-tagline {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.4rem; font-style: italic; font-weight: 700;
+  color: var(--text); line-height: 1.5; margin-bottom: 2rem;
+  border-left: 3px solid var(--accent); padding-left: 1.5rem;
+}
+.tech-badges { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 2rem; }
+.badge {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 50px; padding: 6px 16px;
+  font-size: 0.78rem; font-family: 'Space Mono', monospace;
+  color: var(--accent);
+}
+
+/* ─── STORIES ─── */
+#stories {
+  padding: 120px 0;
+  background: var(--bg2);
+}
+.stories-grid {
+  display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem;
+  margin-top: 4rem;
+}
+.story-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 24px; padding: 2rem;
+  backdrop-filter: blur(20px);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.story-card:hover { transform: translateY(-6px); box-shadow: 0 20px 50px rgba(0,100,200,0.15); }
+.story-quote {
+  font-size: 2.5rem; color: var(--accent); line-height: 1;
+  font-family: 'Playfair Display', serif; margin-bottom: 1rem;
+}
+.story-text {
+  color: var(--text-muted); font-size: 0.95rem; line-height: 1.7;
+  margin-bottom: 1.5rem;
+}
+.story-text strong { color: var(--text); font-weight: 600; }
+.story-author { display: flex; align-items: center; gap: 0.8rem; }
+.story-avatar {
+  width: 44px; height: 44px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--blue-500), var(--accent2));
+  display: flex; align-items: center; justify-content: center; font-size: 1.3rem;
+}
+.story-name { font-weight: 600; font-size: 0.9rem; }
+.story-event { color: var(--text-muted); font-size: 0.78rem; font-family: 'Space Mono', monospace; }
+.stars { color: var(--gold); font-size: 0.9rem; margin-top: 0.8rem; }
+.story-tag {
+  display: inline-block; margin-bottom: 1rem;
+  background: rgba(0,212,255,0.1); border: 1px solid rgba(0,212,255,0.2);
+  border-radius: 50px; padding: 4px 12px;
+  font-size: 0.72rem; font-family: 'Space Mono', monospace; color: var(--accent);
+}
+
+/* ─── USECASES ─── */
+#enlighten {
+  padding: 120px 0;
+}
+.usecases-header {
+  text-align: center; margin-bottom: 4rem;
+}
+.usecases-header .section-desc { margin: 0 auto; }
+.usecases-grid {
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem;
+}
+.usecase-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 24px; padding: 2.5rem;
+  backdrop-filter: blur(20px);
+  display: flex; gap: 2rem; align-items: flex-start;
+  transition: all 0.3s;
+  position: relative; overflow: hidden;
+}
+.usecase-card::after {
+  content: '';
+  position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, var(--blue-500), var(--accent));
+  transform: scaleX(0); transition: transform 0.4s;
+}
+.usecase-card:hover { transform: translateY(-5px); }
+.usecase-card:hover::after { transform: scaleX(1); }
+.usecase-icon {
+  font-size: 3rem; flex-shrink: 0;
+  width: 72px; height: 72px;
+  background: linear-gradient(135deg, rgba(26,140,255,0.15), rgba(0,212,255,0.1));
+  border: 1px solid rgba(0,212,255,0.2);
+  border-radius: 20px;
+  display: flex; align-items: center; justify-content: center;
+}
+.usecase-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem; font-weight: 700; margin-bottom: 0.5rem;
+}
+.usecase-desc { color: var(--text-muted); font-size: 0.88rem; line-height: 1.6; margin-bottom: 1rem; }
+.usecase-example {
+  background: rgba(0,212,255,0.07); border-radius: 12px; padding: 0.8rem 1rem;
+  font-size: 0.8rem; color: var(--accent); font-style: italic;
+  border-left: 2px solid var(--accent);
+}
+
+/* ─── TECHNOLOGY ─── */
+#technology {
+  padding: 120px 0;
+  background: var(--bg2);
+}
+.tech-inner {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center;
+}
+.tech-visual {
+  position: relative; height: 360px; display: flex; align-items: center; justify-content: center;
+}
+.tech-circle {
+  width: 260px; height: 260px; border-radius: 50%;
+  border: 2px solid rgba(0,212,255,0.3);
+  position: absolute;
+  display: flex; align-items: center; justify-content: center;
+  animation: spin 20s linear infinite;
+}
+.tech-circle-2 {
+  width: 180px; height: 180px;
+  border-color: rgba(26,140,255,0.4);
+  animation: spin 12s linear infinite reverse;
+}
+.tech-center {
+  width: 100px; height: 100px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--blue-600), var(--accent));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 2.5rem; position: absolute; z-index: 2;
+  box-shadow: 0 0 40px rgba(0,212,255,0.4);
+  animation: pulse 3s ease-in-out infinite;
+}
+.orbit-dot {
+  position: absolute; width: 12px; height: 12px; border-radius: 50%;
+  background: var(--accent); top: -6px; left: 50%; transform: translateX(-50%);
+  box-shadow: 0 0 10px var(--accent);
+}
+.orbit-dot-2 {
+  background: var(--accent2); top: auto; bottom: -6px;
+  box-shadow: 0 0 10px var(--accent2);
+}
+.tech-items { display: flex; flex-direction: column; gap: 1.5rem; }
+.tech-item {
+  background: var(--card-bg); border: 1px solid var(--border);
+  border-radius: 16px; padding: 1.5rem;
+  backdrop-filter: blur(20px);
+  display: flex; gap: 1.2rem; align-items: flex-start;
+  transition: all 0.3s;
+}
+.tech-item:hover { border-color: var(--blue-400); transform: translateX(8px); }
+.tech-item-icon { font-size: 1.8rem; flex-shrink: 0; }
+.tech-item-title { font-weight: 600; margin-bottom: 0.3rem; }
+.tech-item-desc { color: var(--text-muted); font-size: 0.85rem; line-height: 1.5; }
+
+/* ─── PRICING ─── */
+#pricing {
+  padding: 120px 0;
+}
+.pricing-header { text-align: center; margin-bottom: 4rem; }
+.pricing-header .section-desc { margin: 0 auto; }
+.pricing-grid {
+  display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem;
+}
+.pricing-card {
+  background: var(--card-bg); border: 1px solid var(--border);
+  border-radius: 28px; padding: 2.5rem 2rem;
+  backdrop-filter: blur(20px);
+  transition: all 0.4s;
+  position: relative; overflow: hidden;
+  text-align: center;
+}
+.pricing-card.popular {
+  background: linear-gradient(135deg, rgba(0,112,224,0.2), rgba(0,212,255,0.1));
+  border-color: var(--accent);
+  transform: scale(1.04);
+  box-shadow: 0 0 50px rgba(0,212,255,0.2);
+}
+.pricing-card:hover:not(.popular) { transform: translateY(-8px); }
+.popular-badge {
+  position: absolute; top: 1.5rem; right: 1.5rem;
+  background: linear-gradient(135deg, var(--blue-500), var(--accent));
+  color: #fff; font-size: 0.65rem; font-weight: 700;
+  letter-spacing: 0.1em; padding: 4px 12px; border-radius: 50px;
+}
+.pricing-name {
+  font-family: 'Space Mono', monospace; font-size: 0.75rem;
+  letter-spacing: 0.15em; color: var(--accent); margin-bottom: 1.5rem;
+  text-transform: uppercase;
+}
+.pricing-price {
+  font-family: 'Playfair Display', serif;
+  font-size: 3rem; font-weight: 900; margin-bottom: 0.5rem;
+}
+.pricing-price sup { font-size: 1.2rem; vertical-align: top; margin-top: 0.8rem; display: inline-block; }
+.pricing-period { color: var(--text-muted); font-size: 0.85rem; margin-bottom: 2rem; }
+.pricing-features { list-style: none; margin-bottom: 2rem; text-align: left; }
+.pricing-features li {
+  display: flex; gap: 0.7rem; align-items: flex-start;
+  padding: 0.6rem 0; border-bottom: 1px solid var(--border);
+  font-size: 0.9rem; color: var(--text-muted);
+}
+.pricing-features li:last-child { border-bottom: none; }
+.pricing-features li::before { content: '✦'; color: var(--accent); font-size: 0.7rem; margin-top: 3px; flex-shrink: 0; }
+.btn-pricing {
+  width: 100%; padding: 14px; border-radius: 50px;
+  font-size: 0.95rem; font-weight: 600; cursor: pointer;
+  transition: all 0.3s;
+  border: 1.5px solid var(--blue-400);
+  background: transparent; color: var(--text);
+}
+.btn-pricing:hover { background: linear-gradient(135deg, var(--blue-500), var(--accent)); color: #fff; border-color: transparent; }
+.pricing-card.popular .btn-pricing {
+  background: linear-gradient(135deg, var(--blue-500), var(--accent));
+  color: #fff; border-color: transparent;
+}
+
+/* ─── CTA BANNER ─── */
+#cta {
+  padding: 120px 0;
+  background: var(--bg2);
+}
+.cta-inner {
+  background: linear-gradient(135deg, var(--blue-800), rgba(0,112,224,0.3));
+  border: 1px solid rgba(0,212,255,0.3);
+  border-radius: 36px; padding: 5rem 4rem;
+  text-align: center;
+  position: relative; overflow: hidden;
+  backdrop-filter: blur(20px);
+}
+.cta-inner::before {
+  content: '♪';
+  position: absolute; font-size: 20rem; opacity: 0.03;
+  font-family: serif; top: -40px; right: -40px;
+  color: var(--accent);
+}
+.cta-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 900; margin-bottom: 1rem;
+}
+.cta-title em {
+  font-style: italic;
+  background: linear-gradient(135deg, var(--blue-400), var(--accent), var(--accent2));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.cta-sub { color: var(--text-muted); margin-bottom: 3rem; font-size: 1.1rem; line-height: 1.7; max-width: 500px; margin-left: auto; margin-right: auto; }
+.cta-sub { margin-bottom: 3rem; }
+.cta-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+.cta-whatsapp {
+  background: #25d366; color: #fff; border: none; border-radius: 50px;
+  padding: 16px 36px; font-size: 1rem; font-weight: 600; cursor: pointer;
+  transition: all 0.3s;
+  display: flex; align-items: center; gap: 0.5rem;
+}
+.cta-whatsapp:hover { transform: translateY(-3px); box-shadow: 0 12px 35px rgba(37,211,102,0.4); }
+
+/* ─── FOOTER ─── */
+footer {
+  background: var(--bg);
+  border-top: 1px solid var(--border);
+  padding: 4rem 5% 2rem;
+}
+.footer-inner {
+  max-width: 1200px; margin: 0 auto;
+  display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem;
+  margin-bottom: 3rem;
+}
+.footer-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.8rem; font-weight: 900;
+  background: linear-gradient(135deg, var(--blue-400), var(--accent));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  margin-bottom: 1rem;
+}
+.footer-tagline { color: var(--text-muted); font-size: 0.9rem; line-height: 1.6; }
+.footer-col-title { font-weight: 600; margin-bottom: 1.2rem; font-size: 0.9rem; }
+.footer-links { list-style: none; }
+.footer-links li { margin-bottom: 0.7rem; }
+.footer-links a { color: var(--text-muted); text-decoration: none; font-size: 0.88rem; transition: color 0.3s; }
+.footer-links a:hover { color: var(--accent); }
+.footer-bottom {
+  max-width: 1200px; margin: 0 auto;
+  border-top: 1px solid var(--border); padding-top: 2rem;
+  display: flex; justify-content: space-between; align-items: center;
+  color: var(--text-muted); font-size: 0.8rem;
+}
+.footer-contact a { color: var(--accent); text-decoration: none; }
+
+/* ─── WAVE DIVIDER ─── */
+.wave-divider { width: 100%; overflow: hidden; line-height: 0; }
+.wave-divider svg { display: block; width: 100%; }
+
+/* ─── SCROLL REVEAL ─── */
+.reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.7s ease, transform 0.7s ease; }
+.reveal.visible { opacity: 1; transform: none; }
+
+/* ─── MOBILE ─── */
+@media (max-width: 900px) {
+  .hero-inner { grid-template-columns: 1fr; }
+  .hero-visual { display: none; }
+  .services-grid, .pricing-grid, .stories-grid, .usecases-grid { grid-template-columns: 1fr; }
+  .service-card.featured { grid-column: span 1; }
+  .steps { grid-template-columns: repeat(2,1fr); }
+  .steps::before { display: none; }
+  .about-inner, .tech-inner { grid-template-columns: 1fr; }
+  .footer-inner { grid-template-columns: 1fr 1fr; }
+  .nav-links { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- Background orbs -->
+<div class="bg-orbs">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+  <div class="orb orb-4"></div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Dream<span>Music</span></div>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#how">How It Works</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#stories">Stories</a></li>
+    <li><a href="#enlighten">Use Cases</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+  </ul>
+  <div class="nav-right">
+    <button class="theme-toggle" onclick="toggleTheme()">
+      <span id="theme-icon">☀️</span>
+      <span id="theme-label">Light</span>
+    </button>
+    <button class="btn-nav" onclick="scrollTo('#cta')">Get Your Music</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="container">
+    <div class="hero-inner">
+      <div class="hero-text">
+        <div class="hero-tag">🎵 AI-Powered Personalized Music</div>
+        <h1 class="hero-title">
+          Your Story.<br>Your Soundtrack.<br><em>Your Dream.</em>
+        </h1>
+        <p class="hero-sub">
+          We craft bespoke music experiences — from personalized birthday anthems to wedding scores, brand jingles to full-length custom albums. Powered by cutting-edge AI and shaped by Sapna's musical soul.
+        </p>
+        <div class="hero-ctas">
+          <button class="btn-primary" onclick="document.getElementById('cta').scrollIntoView({behavior:'smooth'})">🎵 Create My Music</button>
+          <button class="btn-outline" onclick="document.getElementById('stories').scrollIntoView({behavior:'smooth'})">Hear Their Stories</button>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="vinyl-wrap">
+          <div class="vinyl"></div>
+          <div class="vinyl-label">
+            <div class="vinyl-label-text">Dream<br>Music</div>
+            <div class="vinyl-dot"></div>
+          </div>
+          <div class="floating-note n1">🎵</div>
+          <div class="floating-note n2">🎶</div>
+          <div class="floating-note n3">♪</div>
+          <div class="floating-note n4">♫</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-strip">
+  <div class="marquee-track">
+    <span>Personalized Songs</span><span class="marquee-sep">✦</span>
+    <span>Wedding Anthems</span><span class="marquee-sep">✦</span>
+    <span>Birthday Jingles</span><span class="marquee-sep">✦</span>
+    <span>Brand Jingles</span><span class="marquee-sep">✦</span>
+    <span>Radio Ads</span><span class="marquee-sep">✦</span>
+    <span>Corporate Music</span><span class="marquee-sep">✦</span>
+    <span>Anniversary Songs</span><span class="marquee-sep">✦</span>
+    <span>AI-Powered Creation</span><span class="marquee-sep">✦</span>
+    <span>Custom Lyrics</span><span class="marquee-sep">✦</span>
+    <span>Any Genre</span><span class="marquee-sep">✦</span>
+    <span>Personalized Songs</span><span class="marquee-sep">✦</span>
+    <span>Wedding Anthems</span><span class="marquee-sep">✦</span>
+    <span>Birthday Jingles</span><span class="marquee-sep">✦</span>
+    <span>Brand Jingles</span><span class="marquee-sep">✦</span>
+    <span>Radio Ads</span><span class="marquee-sep">✦</span>
+    <span>Corporate Music</span><span class="marquee-sep">✦</span>
+    <span>Anniversary Songs</span><span class="marquee-sep">✦</span>
+    <span>AI-Powered Creation</span><span class="marquee-sep">✦</span>
+    <span>Custom Lyrics</span><span class="marquee-sep">✦</span>
+    <span>Any Genre</span><span class="marquee-sep">✦</span>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="container">
+    <div class="section-label">What We Create</div>
+    <h2 class="section-title">Music for Every <em>Magical Moment</em></h2>
+    <p class="section-desc">From a 30-second jingle to a full-length studio-quality track — we deliver music that makes moments unforgettable.</p>
+
+    <div class="services-grid reveal">
+      <div class="service-card featured">
+        <span class="tag-new">⭐ Most Popular</span>
+        <span class="service-icon">💍</span>
+        <div class="service-name">Wedding &amp; Event Songs</div>
+        <div class="service-desc">A song that tells your love story. We weave names, memories, and emotions into a composition you'll treasure forever. Played at the altar, the reception, or sent as a gift — it becomes the soundtrack of your most cherished day.</div>
+      </div>
+      <div class="service-card">
+        <span class="service-icon">🎂</span>
+        <div class="service-name">Birthday Anthems</div>
+        <div class="service-desc">More than "Happy Birthday" — a full personalized song highlighting your loved one's unique qualities, inside jokes, and memories.</div>
+      </div>
+      <div class="service-card">
+        <span class="service-icon">📻</span>
+        <div class="service-name">Radio &amp; Ad Jingles</div>
+        <div class="service-desc">Catchy, memorable jingles that make your brand impossible to forget. Professional quality ready for broadcast.</div>
+      </div>
+      <div class="service-card">
+        <span class="service-icon">🏢</span>
+        <div class="service-name">Corporate &amp; Brand Music</div>
+        <div class="service-desc">From brand anthems to product launch soundtracks — music that speaks your brand language and resonates with your audience.</div>
+      </div>
+      <div class="service-card">
+        <span class="service-icon">💝</span>
+        <div class="service-name">Personalized Full Albums</div>
+        <div class="service-desc">A collection of songs curated to your life — a musical autobiography, a gift of a lifetime, or just your story beautifully told.</div>
+      </div>
+      <div class="service-card">
+        <span class="service-icon">🎬</span>
+        <div class="service-name">Background Scores</div>
+        <div class="service-desc">Ambient, cinematic, or upbeat — custom background music for videos, reels, podcasts, or any content you create.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how">
+  <div class="container">
+    <div style="text-align:center; margin-bottom: 0;">
+      <div class="section-label">The Process</div>
+      <h2 class="section-title">From Your Story to <em>Your Song</em></h2>
+      <p class="section-desc" style="margin: 0 auto 0;">Simple, collaborative, and joyful — creating your music is as special as the music itself.</p>
+    </div>
+    <div class="steps reveal">
+      <div class="step">
+        <div class="step-num">01</div>
+        <div class="step-title">Tell Your Story</div>
+        <div class="step-desc">Share details — names, memories, feelings, the occasion. The more you share, the more personal your music becomes.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <div class="step-title">We Craft &amp; Compose</div>
+        <div class="step-desc">Sapna and our AI-powered studio blend your story into original lyrics, melody, and arrangement tailored to your vision.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <div class="step-title">Review &amp; Refine</div>
+        <div class="step-desc">Listen to your draft. We collaborate to fine-tune every note until it feels exactly right — it's your music, your way.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">04</div>
+        <div class="step-title">Yours Forever</div>
+        <div class="step-desc">Receive studio-quality files ready to play at your event, share, stream, or keep as a cherished memory forever.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="about-inner">
+      <div class="about-visual reveal">
+        <div class="floating-stat fs1">
+          <div class="stat-num">500+</div>
+          <div class="stat-label">Songs Created</div>
+        </div>
+        <div class="sapna-card">
+          <div class="sapna-avatar">🎤</div>
+          <div class="sapna-name">Sapna</div>
+          <div class="sapna-title">Founder & Music Director</div>
+          <div class="sapna-bio">A passionate musician and storyteller who believes every person deserves a song that's truly theirs. Sapna blends artistic soul with cutting-edge technology to create music that moves people.</div>
+        </div>
+        <div class="floating-stat fs2">
+          <div class="stat-num">100%</div>
+          <div class="stat-label">Personalized</div>
+        </div>
+      </div>
+
+      <div class="about-content reveal">
+        <div class="section-label">Our Story</div>
+        <h2 class="section-title">Music is the <em>Language of Souls</em></h2>
+        <div class="about-tagline">"Every moment deserves a soundtrack. Every person deserves a song that's beautifully, unmistakably theirs."</div>
+        <p>Dream Music was born from a simple but powerful belief — that personalized music has the power to transform ordinary moments into extraordinary memories. We started with birthday songs for little ones, and today we're a full music creation agency serving weddings, brands, radio stations, and dreamers of all kinds.</p>
+        <p>We combine Sapna's deep musical intuition with the most advanced AI music technology available today — giving you professional, studio-quality results with a deeply personal touch that no AI alone could achieve.</p>
+        <div class="tech-badges">
+          <span class="badge">AI Music Generation</span>
+          <span class="badge">Custom Lyric Writing</span>
+          <span class="badge">Studio Production</span>
+          <span class="badge">Any Genre</span>
+          <span class="badge">Any Language</span>
+          <span class="badge">48hr Delivery</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STORIES -->
+<section id="stories">
+  <div class="container">
+    <div style="text-align:center; margin-bottom: 0;">
+      <div class="section-label">Real Moments, Real Magic</div>
+      <h2 class="section-title">Stories That Made <em>Hearts Sing</em></h2>
+      <p class="section-desc" style="margin: 0 auto 0;">These aren't reviews — these are moments. Moments where music became the most remembered part of a special day.</p>
+    </div>
+    <div class="stories-grid reveal">
+      <div class="story-card">
+        <div class="story-tag">💍 Wedding</div>
+        <div class="story-quote">"</div>
+        <div class="story-text">I gave Sapna our love story — how we met at a rainy bus stop, our first date at a chai stall — and she turned it into a <strong>song that made everyone cry happy tears</strong> at our wedding. Our families still hum it today.</div>
+        <div class="stars">★★★★★</div>
+        <div class="story-author">
+          <div class="story-avatar">👰</div>
+          <div>
+            <div class="story-name">Priya & Arjun</div>
+            <div class="story-event">Mumbai Wedding, 2024</div>
+          </div>
+        </div>
+      </div>
+      <div class="story-card">
+        <div class="story-tag">🎂 Birthday</div>
+        <div class="story-quote">"</div>
+        <div class="story-text">My daughter turned 7 and is obsessed with dinosaurs. Sapna wrote her <strong>a complete dinosaur adventure song with her name in it</strong>. She made us play it 11 times at the party. Absolute magic.</div>
+        <div class="stars">★★★★★</div>
+        <div class="story-author">
+          <div class="story-avatar">🦕</div>
+          <div>
+            <div class="story-name">Ramesh Nair</div>
+            <div class="story-event">Daughter's 7th Birthday</div>
+          </div>
+        </div>
+      </div>
+      <div class="story-card">
+        <div class="story-tag">📻 Brand Jingle</div>
+        <div class="story-quote">"</div>
+        <div class="story-text">We needed a jingle for our bakery's radio ad campaign. Dream Music delivered something so <strong>catchy that people started coming in humming it</strong>. Our sales jumped 40% in the first month.</div>
+        <div class="stars">★★★★★</div>
+        <div class="story-author">
+          <div class="story-avatar">🥐</div>
+          <div>
+            <div class="story-name">Meera's Bakehouse</div>
+            <div class="story-event">Radio Campaign, Pune</div>
+          </div>
+        </div>
+      </div>
+      <div class="story-card">
+        <div class="story-tag">💝 Anniversary</div>
+        <div class="story-quote">"</div>
+        <div class="story-text">25 years of marriage, and I wanted to say something beyond words. Sapna wrote a <strong>song with all 25 of our favorite memories</strong>. My wife hasn't stopped smiling since she heard it.</div>
+        <div class="stars">★★★★★</div>
+        <div class="story-author">
+          <div class="story-avatar">💑</div>
+          <div>
+            <div class="story-name">Suresh Mehta</div>
+            <div class="story-event">Silver Anniversary Gift</div>
+          </div>
+        </div>
+      </div>
+      <div class="story-card">
+        <div class="story-tag">🏢 Corporate</div>
+        <div class="story-quote">"</div>
+        <div class="story-text">We commissioned a company anthem for our 10-year milestone. The song captured our <strong>entire journey and values so perfectly</strong>, it now plays at every town hall and onboarding session.</div>
+        <div class="stars">★★★★★</div>
+        <div class="story-author">
+          <div class="story-avatar">🏆</div>
+          <div>
+            <div class="story-name">TechForward India</div>
+            <div class="story-event">Company Anthem</div>
+          </div>
+        </div>
+      </div>
+      <div class="story-card">
+        <div class="story-tag">🎓 Graduation</div>
+        <div class="story-quote">"</div>
+        <div class="story-text">My family surprised me with a graduation song referencing every struggle and triumph of my MBBS journey. I broke down hearing it. <strong>The most thoughtful gift I've ever received.</strong></div>
+        <div class="stars">★★★★★</div>
+        <div class="story-author">
+          <div class="story-avatar">👩‍⚕️</div>
+          <div>
+            <div class="story-name">Dr. Ananya Sharma</div>
+            <div class="story-event">MBBS Graduation</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ENLIGHTEN YOUR LIFE (USE CASES) -->
+<section id="enlighten">
+  <div class="container">
+    <div class="usecases-header">
+      <div class="section-label">Possibilities Are Endless</div>
+      <h2 class="section-title">Enlighten Every Corner of <em>Your Life</em></h2>
+      <p class="section-desc">Music doesn't just fit occasions — it defines them. Here's how Dream Music can soundtrack every meaningful chapter of your life.</p>
+    </div>
+    <div class="usecases-grid reveal">
+      <div class="usecase-card">
+        <div class="usecase-icon">💒</div>
+        <div>
+          <div class="usecase-name">Weddings &amp; Sangeets</div>
+          <div class="usecase-desc">From the sangeet night performance piece to the first dance slow song — every moment of your wedding can have a dedicated original composition.</div>
+          <div class="usecase-example">💡 Example: "A Bollywood-style song with names of the bride, groom, and both families, listing how they met and their love story."</div>
+        </div>
+      </div>
+      <div class="usecase-card">
+        <div class="usecase-icon">🎂</div>
+        <div>
+          <div class="usecase-name">Birthdays &amp; Milestones</div>
+          <div class="usecase-desc">Make someone feel truly seen. A song that mentions their passions, quirks, achievements, and the people who love them.</div>
+          <div class="usecase-example">💡 Example: "A fun pop song for my son's 10th birthday about his love for cricket, video games, and his pet dog Max."</div>
+        </div>
+      </div>
+      <div class="usecase-card">
+        <div class="usecase-icon">📢</div>
+        <div>
+          <div class="usecase-name">Brand &amp; Radio Advertising</div>
+          <div class="usecase-desc">A jingle so catchy it becomes part of pop culture. Professional radio-ready quality with your brand's message at its heart.</div>
+          <div class="usecase-example">💡 Example: "A 30-second upbeat Hindi jingle for a new cold drink brand targeting youth in tier-2 cities."</div>
+        </div>
+      </div>
+      <div class="usecase-card">
+        <div class="usecase-icon">🌸</div>
+        <div>
+          <div class="usecase-name">Love &amp; Proposals</div>
+          <div class="usecase-desc">Say it with music. The most romantic proposal ever — a custom song playing when you pop the question, or a love letter in musical form.</div>
+          <div class="usecase-example">💡 Example: "A soft acoustic love song listing every moment from our first date to our trip to Goa — ending with 'Will you marry me?'"</div>
+        </div>
+      </div>
+      <div class="usecase-card">
+        <div class="usecase-icon">🏢</div>
+        <div>
+          <div class="usecase-name">Corporate Events &amp; Anthems</div>
+          <div class="usecase-desc">Company culture, team spirit, product launches, award ceremonies — give every corporate moment a musical identity it deserves.</div>
+          <div class="usecase-example">💡 Example: "An inspirational anthem for our sales team reflecting our company's 'Never Give Up' ethos and recent product success."</div>
+        </div>
+      </div>
+      <div class="usecase-card">
+        <div class="usecase-icon">🎓</div>
+        <div>
+          <div class="usecase-name">Farewell, Tribute &amp; Remembrance</div>
+          <div class="usecase-desc">Honour someone retiring, celebrate a friendship, or create a tribute that captures a person's legacy in melody and words.</div>
+          <div class="usecase-example">💡 Example: "A heartfelt tribute song for our retiring teacher of 30 years, mentioning students she changed, values she taught."</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TECHNOLOGY -->
+<section id="technology">
+  <div class="container">
+    <div class="tech-inner">
+      <div class="tech-visual reveal">
+        <div class="tech-circle">
+          <div class="orbit-dot"></div>
+          <div class="orbit-dot orbit-dot-2"></div>
+        </div>
+        <div class="tech-circle tech-circle-2"></div>
+        <div class="tech-center">🎵</div>
+      </div>
+      <div class="reveal">
+        <div class="section-label">Cutting-Edge Technology</div>
+        <h2 class="section-title">Where Human Soul Meets <em>AI Power</em></h2>
+        <p class="section-desc" style="margin-bottom: 2rem;">We don't choose between technology and artistry — we harness both to create something neither could achieve alone.</p>
+        <div class="tech-items">
+          <div class="tech-item">
+            <div class="tech-item-icon">🤖</div>
+            <div>
+              <div class="tech-item-title">AI Music Composition</div>
+              <div class="tech-item-desc">State-of-the-art generative models trained on thousands of musical styles produce melodies that feel genuinely human.</div>
+            </div>
+          </div>
+          <div class="tech-item">
+            <div class="tech-item-icon">✍️</div>
+            <div>
+              <div class="tech-item-title">Intelligent Lyric Writing</div>
+              <div class="tech-item-desc">AI assists in weaving your personal details into emotionally resonant lyrics, refined by Sapna's artistic eye.</div>
+            </div>
+          </div>
+          <div class="tech-item">
+            <div class="tech-item-icon">🎚️</div>
+            <div>
+              <div class="tech-item-title">Professional Studio Production</div>
+              <div class="tech-item-desc">Every track is mixed and mastered to broadcast quality — ready for events, streaming, radio, or social media.</div>
+            </div>
+          </div>
+          <div class="tech-item">
+            <div class="tech-item-icon">⚡</div>
+            <div>
+              <div class="tech-item-title">Fast Turnaround</div>
+              <div class="tech-item-desc">From your story to your final song in as little as 48 hours — without ever compromising on quality or personalization.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing">
+  <div class="container">
+    <div class="pricing-header">
+      <div class="section-label">Investment in Magic</div>
+      <h2 class="section-title">Simple, Transparent <em>Pricing</em></h2>
+      <p class="section-desc">Every tier delivers something truly extraordinary. Contact us for custom packages — we'll find the perfect fit.</p>
+    </div>
+    <div class="pricing-grid reveal">
+      <div class="pricing-card">
+        <div class="pricing-name">Spark</div>
+        <div class="pricing-price"><sup>₹</sup>1,999</div>
+        <div class="pricing-period">Short Jingle / Birthday Song</div>
+        <ul class="pricing-features">
+          <li>Up to 60-second track</li>
+          <li>Custom lyrics with your details</li>
+          <li>1 revision round</li>
+          <li>MP3 delivery in 48 hrs</li>
+          <li>Perfect for birthdays &amp; gifts</li>
+        </ul>
+        <button class="btn-pricing" onclick="document.getElementById('cta').scrollIntoView({behavior:'smooth'})">Get Started</button>
+      </div>
+      <div class="pricing-card popular">
+        <div class="popular-badge">⭐ Most Popular</div>
+        <div class="pricing-name">Dream</div>
+        <div class="pricing-price"><sup>₹</sup>4,999</div>
+        <div class="pricing-period">Full Personalized Song (3–4 min)</div>
+        <ul class="pricing-features">
+          <li>Full-length track (3–4 min)</li>
+          <li>Custom lyrics, melody &amp; arrangement</li>
+          <li>3 revision rounds</li>
+          <li>MP3 + WAV files</li>
+          <li>Ideal for weddings &amp; events</li>
+          <li>Priority 24-hr delivery</li>
+        </ul>
+        <button class="btn-pricing" onclick="document.getElementById('cta').scrollIntoView({behavior:'smooth'})">Get Started</button>
+      </div>
+      <div class="pricing-card">
+        <div class="pricing-name">Maestro</div>
+        <div class="pricing-price"><sup>₹</sup>14,999</div>
+        <div class="pricing-period">Agency Package / Album</div>
+        <ul class="pricing-features">
+          <li>Up to 5 custom tracks</li>
+          <li>Full music agency support</li>
+          <li>Unlimited revisions</li>
+          <li>Radio-ready broadcast quality</li>
+          <li>Commercial usage rights</li>
+          <li>Dedicated project manager</li>
+          <li>Ideal for brands &amp; corporates</li>
+        </ul>
+        <button class="btn-pricing" onclick="document.getElementById('cta').scrollIntoView({behavior:'smooth'})">Get Started</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <div class="container">
+    <div class="cta-inner reveal">
+      <div class="section-label" style="text-align:center;">Ready to Begin?</div>
+      <h2 class="cta-title">Let's Create Something <em>Unforgettable</em><br>Together 🎵</h2>
+      <p class="cta-sub">Your story deserves a song. Reach out to Sapna today and let's turn your moment into music that lasts a lifetime. No moment is too small, no dream too big.</p>
+      <div class="cta-actions">
+        <button class="btn-primary" onclick="window.open('https://wa.me/919423754546?text=Hi Sapna! I would love to create custom music with Dream Music.', '_blank')" style="font-size:1rem; padding: 16px 36px;">🎵 Start My Music Journey</button>
+        <button class="cta-whatsapp" onclick="window.open('https://wa.me/919423754546', '_blank')">
+          <span>💬</span> WhatsApp Sapna
+        </button>
+      </div>
+      <p style="color: var(--text-muted); margin-top: 1.5rem; font-size: 0.85rem;">📞 WhatsApp / Call: +91 94237 54546 &nbsp;•&nbsp; Available 9 AM – 9 PM</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-logo">DreamMusic</div>
+      <div class="footer-tagline">Turning your stories into songs.<br>Turning moments into memories.<br>Powered by music, driven by love. 🎵</div>
+    </div>
+    <div>
+      <div class="footer-col-title">Services</div>
+      <ul class="footer-links">
+        <li><a href="#services">Wedding Songs</a></li>
+        <li><a href="#services">Birthday Jingles</a></li>
+        <li><a href="#services">Brand Jingles</a></li>
+        <li><a href="#services">Radio Ads</a></li>
+        <li><a href="#services">Full Albums</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Company</div>
+      <ul class="footer-links">
+        <li><a href="#about">About Sapna</a></li>
+        <li><a href="#stories">User Stories</a></li>
+        <li><a href="#how">How It Works</a></li>
+        <li><a href="#technology">Technology</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Connect</div>
+      <ul class="footer-links">
+        <li><a href="https://wa.me/919423754546">WhatsApp Us</a></li>
+        <li><a href="#cta">Get a Quote</a></li>
+        <li><a href="#">Instagram</a></li>
+        <li><a href="#">YouTube</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div>© 2025 Dream Music by Sapna. All rights reserved.</div>
+    <div class="footer-contact">Made with ♥ &amp; music · <a href="https://wa.me/919423754546">+91 94237 54546</a></div>
+  </div>
+</footer>
+
+<script>
+// Theme toggle
+function toggleTheme() {
+  const html = document.documentElement;
+  const isDark = html.getAttribute('data-theme') === 'dark';
+  html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+  document.getElementById('theme-icon').textContent = isDark ? '🌙' : '☀️';
+  document.getElementById('theme-label').textContent = isDark ? 'Dark' : 'Light';
+}
+
+// Scroll reveal
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      // Stagger children if they are siblings
+      const siblings = entry.target.querySelectorAll('.service-card, .story-card, .usecase-card, .pricing-card, .step');
+      siblings.forEach((el, i) => {
+        el.style.transitionDelay = `${i * 0.1}s`;
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(30px)';
+        setTimeout(() => {
+          el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+          el.style.opacity = '1';
+          el.style.transform = 'none';
+        }, i * 100);
+      });
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// Nav scroll style
+window.addEventListener('scroll', () => {
+  const nav = document.querySelector('nav');
+  if (window.scrollY > 80) {
+    nav.style.boxShadow = '0 4px 30px rgba(0,0,0,0.3)';
+  } else {
+    nav.style.boxShadow = 'none';
+  }
+});
+
+// Smooth scroll for nav links
+document.querySelectorAll('a[href^="#"]').forEach(link => {
+  link.addEventListener('click', e => {
+    e.preventDefault();
+    const target = document.querySelector(link.getAttribute('href'));
+    if (target) target.scrollIntoView({ behavior: 'smooth' });
+  });
+});
+</script>
+</body>
+</html>
